@@ -3,15 +3,39 @@ from .models import Project, Expense, Category
 from django.views.generic import CreateView
 from django.utils.text import slugify
 from django.http import HttpResponseRedirect
+from .forms import ExpenseForm
 
 def project_list(request):
 	return render(request, 'budget/project-list.html')
 
 def project_detail(request, project_slug):
-	# Fetch the correct project
 	project = get_object_or_404(Project, slug=project_slug)
-	# expense_list = project.expenses
-	return render(request, 'budget/project-detail.html', {'project': project, 'expense_list': project.expenses.all()})
+
+	if request.method == "GET":
+		category_list = Category.objects.filter(project=project)
+		return render(request, 'budget/project-detail.html', {'project': project, 'expense_list': project.expenses.all(), 'category_list': category_list})
+	
+	elif request.method == "POST":
+
+		form = ExpenseForm(request.POST)
+		if form.is_valid():
+			title = form.cleaned_data['title']
+			amount = form.cleaned_data['amount']
+			category_name = form.cleaned_data['category']
+
+			category = get_object_or_404(Category, project=project, name=category_name)
+
+			Expense.objects.create(
+				project=project,
+				title=title,
+				amount=amount,
+				category=category
+			).save()
+
+	return HttpResponseRedirect(project_slug)
+
+
+
 
 class ProjectCreateView(CreateView):
 	model = Project

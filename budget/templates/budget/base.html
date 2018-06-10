@@ -4,10 +4,14 @@
 	<meta charset="UTF-8">
 	<title>Budget Application</title>
 	{% load static %}
-	<link rel="stylesheet" href="{% static 'css/materialize.css' %}">
+	<!-- <link rel="stylesheet" href="{% static 'css/materialize.css' %}"> -->
 	<link rel="stylesheet" href="{% static 'css/styles.css' %} ">
 	<!-- <link rel="stylesheet" href="{% static 'fonts/' %}"> -->
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!-- <script src="{% static 'js/materialize.js' %}"></script> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
 </head>
 <body>
 	{% block content %}
@@ -15,7 +19,7 @@
 	{% endblock %}
 	
 
-	<script src="{% static 'js/materialize.js' %}"></script>
+	
 	<!-- <script src="{% static 'js/script.js' %}"></script> -->
 </body>
 </html>
